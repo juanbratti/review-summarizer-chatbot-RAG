@@ -5,6 +5,8 @@
 
 Este proyecto está diseñado para proporcionar una interfaz de preguntas y respuestas sobre productos, basada en reseñas. Utiliza ChromaDB para almacenar y consultar reseñas similares a las preguntas, y Cohere LLM (Large Language Model) para generar respuestas basadas en estas reseñas. El sistema es capaz de traducir las preguntas y respuestas entre varios idiomas.
 
+Link a presentación: https://www.canva.com/design/DAGZ08CAWkM/vhJLg8_t6Z9j4JyEJ7xOdA/edit?utm_content=DAGZ08CAWkM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 # Endpoints de la API
 
 ## 1. `/history/` (Método: `GET`)
