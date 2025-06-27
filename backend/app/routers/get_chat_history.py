@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from models.models import ChatHistory, ChatMessage
-from services.cohere_llm import chat_history
+from ..models.models import ChatHistory, ChatMessage
+from ..services.cohere_llm import chat_history
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from models.models import Input
-from services.chroma_database import save_documents
+from ..models.models import Input
+from ..services.chroma_database import save_documents
 
 router = APIRouter()
 

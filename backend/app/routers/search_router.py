@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from models.models import SearchRequest, SearchResponse
-from services.chroma_database import search_similar_reviews
-from services.cohere_llm import get_llm_response, translate_llm_answer, translate_query
+from ..models.models import SearchRequest, SearchResponse
+from ..services.chroma_database import search_similar_reviews
+from ..services.cohere_llm import get_llm_response, translate_llm_answer, translate_query
 
 router = APIRouter()
 

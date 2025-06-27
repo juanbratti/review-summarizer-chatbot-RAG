@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import question_router, upload_router, search_router, get_chat_history
+from .routers import question_router, upload_router, search_router, get_chat_history
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Reseñas Q&A",
