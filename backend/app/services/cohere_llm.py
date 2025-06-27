@@ -1,25 +1,46 @@
-import os
-import cohere
-from dotenv import load_dotenv
+# ===============================================
+# DOCS
+# ===============================================
 
-load_dotenv() 
-api_key = os.getenv("COHERE_API_KEY")
-co = cohere.ClientV2(api_key)
+"""
+Cohere LLM Service for the RAG Chatbot API.
+"""
+
+# ===============================================
+# IMPORTS
+# ===============================================
+
+import cohere
+from ..config import settings
+
+# ===============================================
+# COHERE CLIENT AND CHAT HISTORY
+# ===============================================
+
+co = cohere.ClientV2(settings.cohere_api_key)
 
 chat_history = []
 
+# ===============================================
+# SERVICES
+# ===============================================
+
 def get_embeddings(textos):
-    """Función para obtener embeddings de Cohere."""
+    """
+    Get embeddings from Cohere.
+    """
     response = co.embed(
         texts=textos,
-        model="embed-english-v3.0",
+        model=settings.embedding_model,
         input_type="search_query",
         embedding_types=["float"],
     )
     return response.embeddings.float_ 
 
 def translate_query(query):
-    """Función para traducir una pregunta al inglés."""
+    """
+    Translate a question to English.
+    """
     
     intr_system = """
         You are an expert translator who can translate texts from any language to another.
@@ -35,13 +56,13 @@ def translate_query(query):
         Your answer should be only the translated text.
         """
     
-    content = llm('command-r-plus-04-2024', intr_system, query, 1)
+    content = llm(settings.llm_model, intr_system, query, 1)
     
     return content
 
 def llm(modelo, prompt, msje, translation):
     """
-    Utiliza Cohere para generar una respuesta a partir de un prompt.
+    Use Cohere to generate a response from a prompt.
     """
     if not translation:
         chat_history.append({"role": "user", "content": msje})
@@ -67,7 +88,7 @@ def llm(modelo, prompt, msje, translation):
 
 def get_llm_response(question: str, reviews: list):
     """
-    Utiliza Cohere para generar una respuesta a partir de reseñas.
+    Use Cohere to generate a response from reviews.
     """
 
     context = "\n".join(reviews)
@@ -88,13 +109,13 @@ def get_llm_response(question: str, reviews: list):
     
     
 
-    content = llm('command-r-plus-04-2024', prompt, question, 0)
+    content = llm(settings.llm_model, prompt, question, 0)
 
     return content
 
 def translate_llm_answer(answer):
     """
-    Traduce la respuesta del LLM al Español.
+    Translate the LLM answer to Spanish.
     """
 
     intr_system = """
@@ -109,7 +130,7 @@ def translate_llm_answer(answer):
         You must not answer with anything other than the translated text. Make sure the text to translate is in spanish.
         """
     
-    content = llm('command-r-plus-04-2024', intr_system, query, 1)
+    content = llm(settings.llm_model, intr_system, query, 1)
     
     return content
 

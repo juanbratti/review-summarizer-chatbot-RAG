@@ -1,34 +1,54 @@
+# ===============================================
+# DOCS
+# ===============================================
+
+"""
+Question Router for the RAG Chatbot API.
+"""
+
+# ===============================================
+# IMPORTS
+# ===============================================
+
 from fastapi import APIRouter, HTTPException
 from ..models.models import QuestionRequest, QuestionResponse
 from ..services.chroma_database import search_similar_reviews
 from ..services.cohere_llm import get_llm_response, translate_llm_answer, translate_query
 
+# ===============================================
+# ROUTER
+# ===============================================
+
 router = APIRouter()
+
+# ===============================================
+# ASK QUESTION FUNCTION
+# ===============================================
 
 @router.post("/questions/", response_model=QuestionResponse)
 async def ask_question(question: QuestionRequest):
     """
-    Recibe una pregunta, busca reseñas similares usando chroma,
-    y utiliza un LLM para responder.
+    Receives a question, searches for similar reviews using chroma,
+    and uses an LLM to answer.
     """
     try:
 
         question_og = question.question
 
-        # Traducir la pregunta al inglés
+        # --- translate the question to English --- #
         question_en = translate_query(question_og)
 
-        # Buscar reseñas similares en ChromaDB
+        # --- Search for similar reviews in ChromaDB --- #
         similar_reviews, result = search_similar_reviews(question_en)
 
-        # Si no hay reseñas similares, responder con un mensaje
+        # --- if no similar reviews, respond with a message --- #
         if not similar_reviews:
-            return {"answer": "No reviews found for that question."}
+            return {"answer": "No reviews found for that question.", "results": []}
 
-        # Generar respuesta usando el LLM
+        # --- generate answer using the LLM --- #
         llm_answer = get_llm_response(question_en, similar_reviews)
     
-        # traduzco respuesta del idioma a español
+        # --- translate answer to Spanish --- #
         llm_answer_translated = translate_llm_answer(llm_answer)
 
         formatted_results = [

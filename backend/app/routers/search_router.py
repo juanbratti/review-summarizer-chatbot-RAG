@@ -1,16 +1,36 @@
+# ===============================================
+# DOCS
+# ===============================================
+
+"""
+Search Router for the RAG Chatbot API.
+"""
+
+# ===============================================
+# IMPORTS
+# ===============================================
+
 from fastapi import APIRouter, HTTPException
 from ..models.models import SearchRequest, SearchResponse
 from ..services.chroma_database import search_similar_reviews
-from ..services.cohere_llm import get_llm_response, translate_llm_answer, translate_query
+from ..services.cohere_llm import translate_query
+
+# ===============================================
+# ROUTER
+# ===============================================
 
 router = APIRouter()
+
+# ===============================================
+# SEARCH FUNCTION
+# ===============================================
 
 @router.post("/search", status_code=200, response_model=SearchResponse)
 async def search(to_search: SearchRequest):
     """
-    Endpoint que realiza una búsqueda de documentos similares y devuelve múltiples resultados.
+    Endpoint that performs a search for similar documents and returns multiple results.
     """
-    # traucir la pregunta al inglés
+    # --- translate the question to English --- #
     question_en = translate_query(to_search.query)
 
     docs, result = search_similar_reviews(question_en)
