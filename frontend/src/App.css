@@ -126,7 +126,7 @@ body {
 
 .App-header {
   background-color: #21D4FD;
-  background-image: url('../public/background-image.png');
+  /* background-image: url('../public/background-image.png'); */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
