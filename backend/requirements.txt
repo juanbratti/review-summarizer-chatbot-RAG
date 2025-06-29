@@ -1,0 +1,8 @@
+fastapi==0.115.14
+uvicorn==0.34.3
+chromadb==1.0.13
+sentence-transformers==4.1.0
+cohere==5.15.0
+pydantic==2.11.7
+langchain-text-splitters==0.3.8
+pydantic-settings==2.10.1
