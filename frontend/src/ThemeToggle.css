@@ -1,0 +1,165 @@
+/* ===============================================
+   THEME TOGGLE COMPONENT STYLES
+   =============================================== */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+  background: var(--bg-hover);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ===============================================
+   TOGGLE TRACK (Switch Background)
+   =============================================== */
+
+.theme-toggle-track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--toggle-track-bg);
+  border-radius: 12px;
+  border: 2px solid var(--toggle-border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* ===============================================
+   TOGGLE THUMB (Moving Circle)
+   =============================================== */
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--toggle-thumb-bg);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Move thumb to right when dark mode is active */
+[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(16px);
+}
+
+/* ===============================================
+   THEME ICONS
+   =============================================== */
+
+.theme-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--toggle-icon-color);
+  transition: all 0.3s ease;
+}
+
+.theme-icon svg {
+  transition: transform 0.3s ease;
+}
+
+/* Rotate icons for smooth animation */
+[data-theme="light"] .theme-icon svg {
+  transform: rotate(0deg);
+}
+
+[data-theme="dark"] .theme-icon svg {
+  transform: rotate(360deg);
+}
+
+/* ===============================================
+   TOGGLE LABEL
+   =============================================== */
+
+.theme-toggle-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    gap: 0.5rem;
+  }
+  
+  .theme-toggle-label {
+    font-size: 0.8rem;
+  }
+  
+  .theme-toggle-track {
+    width: 40px;
+    height: 22px;
+  }
+  
+  .theme-toggle-thumb {
+    width: 14px;
+    height: 14px;
+  }
+  
+  [data-theme="dark"] .theme-toggle-thumb {
+    transform: translateX(14px);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hide label on very small screens */
+  .theme-toggle-label {
+    display: none;
+  }
+  
+  .theme-toggle {
+    gap: 0;
+    min-width: 44px;
+    justify-content: center;
+  }
+}
+
+/* ===============================================
+   ACCESSIBILITY
+   =============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-thumb,
+  .theme-icon,
+  .theme-icon svg {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .theme-toggle-track {
+    border-width: 3px;
+  }
+  
+  .theme-toggle-thumb {
+    box-shadow: 0 0 0 2px var(--toggle-border);
+  }
+} 
