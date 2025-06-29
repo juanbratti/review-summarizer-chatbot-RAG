@@ -10,12 +10,11 @@ Upload Router for the RAG Chatbot API.
 # IMPORTS
 # ===============================================
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from ..models.models import UploadRequest, UploadResponse
 from ..services.chroma_database import save_documents
 from ..config import settings
-import io
 
 # ===============================================
 # ROUTER
