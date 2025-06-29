@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FileUpload from './FileUpload';
+import TextInput from './TextInput';
 import './WelcomeScreen.css';
 
 const WelcomeScreen = ({ onSampleQuestion }) => {
+  const [activeTab, setActiveTab] = useState('text'); // Default to text input
+  
   const sampleQuestions = [
     "¿Cuál es el mejor aspecto de este producto?",
     "¿Qué opinan los usuarios sobre la calidad?",
@@ -25,8 +28,31 @@ const WelcomeScreen = ({ onSampleQuestion }) => {
           y responder preguntas sobre la experiencia de los usuarios.
         </p>
         
-        {/* File Upload Component */}
-        <FileUpload onUploadSuccess={handleUploadSuccess} />
+        {/* Upload Options Tabs */}
+        <div className="upload-tabs">
+          <button 
+            className={`tab-btn ${activeTab === 'text' ? 'active' : ''}`}
+            onClick={() => setActiveTab('text')}
+          >
+            📝 Pegar Texto
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'file' ? 'active' : ''}`}
+            onClick={() => setActiveTab('file')}
+          >
+            📁 Subir Archivo
+          </button>
+        </div>
+
+        {/* Upload Components */}
+        <div className="upload-content">
+          {activeTab === 'text' && (
+            <TextInput onUploadSuccess={handleUploadSuccess} />
+          )}
+          {activeTab === 'file' && (
+            <FileUpload onUploadSuccess={handleUploadSuccess} />
+          )}
+        </div>
         
         <div className="sample-questions">
           <h3>Preguntas de ejemplo:</h3>
