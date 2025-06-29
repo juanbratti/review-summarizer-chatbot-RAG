@@ -42,7 +42,8 @@ const ChatInterface = () => {
 
     try {
       // Call your backend API
-      const response = await axios.post('http://localhost:8000/app/questions/', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${apiUrl}/app/questions/`, {
         question: userMessage.content
       });
 
