@@ -18,11 +18,11 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 
 # ===============================================
-# SETTINGS CLASS
+# TO DEFINE SETTINGS
 # ===============================================
 
 class Settings(BaseSettings):
-    """Application settings and configuration."""
+    """Application settings for the RAG Chatbot API."""
     
     # --- Application Settings --- #
     app_name: str = "Review Summarizer RAG Chatbot"
@@ -58,7 +58,9 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
     log_file: Optional[str] = Field(default=None, env="LOG_FILE")
     
+    # --- Separation of concerns --- #
     class Config:
+        """Configuration for the settings class."""
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
