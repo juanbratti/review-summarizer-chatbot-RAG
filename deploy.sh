@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# REVI.AI Deployment Helper Script
-# This script helps prepare your project for deployment
+# REVI.AI Deployment Helper Script - Vercel + Railway
+# This script helps prepare your project for Vercel + Railway deployment
 
-echo "🚀 REVI.AI Deployment Helper"
-echo "================================"
+echo "🚀 REVI.AI Deployment Helper - Vercel + Railway"
+echo "=================================================="
 
 # Color codes for output
 RED='\033[0;31m'
@@ -128,75 +128,112 @@ fi
 
 cd ..
 
-# Show deployment options
+# Check git status
 echo ""
-echo "🌐 Deployment Options:"
-echo "================================"
+echo "📝 Checking git status..."
+if git diff --quiet && git diff --staged --quiet; then
+    print_status "All changes are committed"
+else
+    print_warning "You have uncommitted changes"
+    echo "Do you want to commit and push them now? (y/n)"
+    read -r commit_choice
+    if [ "$commit_choice" = "y" ] || [ "$commit_choice" = "Y" ]; then
+        git add .
+        git commit -m "Prepare for Vercel + Railway deployment"
+        git push
+        print_status "Changes committed and pushed"
+    else
+        print_info "Please commit and push your changes before deploying"
+    fi
+fi
+
+# Show deployment steps
 echo ""
-echo "1. 🥇 Vercel + Railway (Recommended for beginners)"
-echo "   - Frontend: Deploy to Vercel"
-echo "   - Backend: Deploy to Railway"
-echo "   - Cost: Free tier available"
+echo "🌐 Vercel + Railway Deployment Steps:"
+echo "====================================="
 echo ""
-echo "2. 🥈 Single Server (DigitalOcean/AWS/Linode)"
-echo "   - Deploy both frontend and backend on one server"
-echo "   - Cost: \$5-20/month"
-echo ""
-echo "3. 🥉 Docker (Professional)"
-echo "   - Use Docker containers"
-echo "   - Deploy to any cloud platform"
-echo ""
-echo "4. 🧪 Test locally with Docker"
-echo "   - Test the production build locally"
+echo "🎯 Step 1: Push to GitHub"
+print_status "✅ Your code should be on GitHub now"
 echo ""
 
-# Ask user what they want to do
-echo "What would you like to do?"
-echo "1) Setup Vercel + Railway deployment files"
-echo "2) Setup single server deployment files"
-echo "3) Test locally with Docker"
-echo "4) Show deployment guide"
-echo "5) Exit"
+echo "🎨 Step 2: Deploy Frontend to Vercel"
+echo "1. Go to https://vercel.com and sign up/login"
+echo "2. Click 'New Project' and import your GitHub repository"
+echo "3. Configure:"
+echo "   - Framework: Create React App"
+echo "   - Root Directory: frontend"
+echo "   - Build Command: npm run build"
+echo "   - Output Directory: build"
+echo "4. Add environment variable:"
+echo "   REACT_APP_API_URL = https://your-backend.railway.app"
+echo "   (You'll get this URL in Step 3)"
+echo "5. Click Deploy"
+echo ""
 
-read -p "Enter your choice (1-5): " choice
+echo "🚂 Step 3: Deploy Backend to Railway"
+echo "1. Go to https://railway.app and sign up/login"
+echo "2. Click 'New Project' → 'Deploy from GitHub repo'"
+echo "3. Select your repository"
+echo "4. Configure:"
+echo "   - Root Directory: backend"
+echo "   - Start Command: uvicorn app.main:app --host 0.0.0.0 --port \$PORT"
+echo "5. Add environment variables:"
+echo "   OPENAI_API_KEY = your_actual_openai_api_key"
+echo "   CORS_ORIGINS = https://your-project.vercel.app"
+echo "   DEBUG = False"
+echo "   APP_NAME = REVI.AI"
+echo "6. Deploy"
+echo ""
+
+echo "🔗 Step 4: Connect Frontend and Backend"
+echo "1. Copy your Railway backend URL"
+echo "2. Go back to Vercel project settings"
+echo "3. Update REACT_APP_API_URL with Railway URL"
+echo "4. Update Railway CORS_ORIGINS with Vercel URL"
+echo "5. Test your deployment!"
+echo ""
+
+echo "📚 Need detailed help?"
+echo "Check DEPLOYMENT_GUIDE.md for step-by-step instructions with screenshots"
+echo ""
+
+# Ask if user wants to open the deployment guide
+echo "Would you like to:"
+echo "1) Open the deployment guide"
+echo "2) Open Vercel in browser"
+echo "3) Open Railway in browser"
+echo "4) Exit"
+
+read -p "Enter your choice (1-4): " choice
 
 case $choice in
     1)
-        print_info "Setting up Vercel + Railway deployment..."
-        print_status "vercel.json created"
-        print_status "railway.json created"
-        echo ""
-        echo "Next steps:"
-        echo "1. Push your code to GitHub"
-        echo "2. Sign up to Vercel (https://vercel.com)"
-        echo "3. Sign up to Railway (https://railway.app)"
-        echo "4. Connect your GitHub repository to both platforms"
-        echo "5. Set environment variables as described in DEPLOYMENT_GUIDE.md"
-        ;;
-    2)
-        print_info "Single server deployment files already created"
-        echo ""
-        echo "Next steps:"
-        echo "1. Create a server (Ubuntu 22.04 recommended)"
-        echo "2. Follow the detailed guide in DEPLOYMENT_GUIDE.md"
-        ;;
-    3)
-        if command -v docker >/dev/null 2>&1; then
-            print_info "Testing with Docker..."
-            docker-compose up --build
-        else
-            print_error "Docker not found. Please install Docker first"
-        fi
-        ;;
-    4)
         print_info "Opening deployment guide..."
         if command -v code >/dev/null 2>&1; then
             code DEPLOYMENT_GUIDE.md
+        elif command -v xdg-open >/dev/null 2>&1; then
+            xdg-open DEPLOYMENT_GUIDE.md
         else
             echo "Please read DEPLOYMENT_GUIDE.md for detailed instructions"
         fi
         ;;
-    5)
+    2)
+        print_info "Opening Vercel..."
+        if command -v xdg-open >/dev/null 2>&1; then
+            xdg-open https://vercel.com
+        else
+            echo "Please visit: https://vercel.com"
+        fi
+        ;;
+    3)
+        print_info "Opening Railway..."
+        if command -v xdg-open >/dev/null 2>&1; then
+            xdg-open https://railway.app
+        else
+            echo "Please visit: https://railway.app"
+        fi
+        ;;
+    4)
         print_info "Exiting..."
         exit 0
         ;;
@@ -207,4 +244,10 @@ case $choice in
 esac
 
 echo ""
-print_status "Setup completed! Check DEPLOYMENT_GUIDE.md for detailed instructions." 
+print_status "Setup completed! Your app is ready for Vercel + Railway deployment."
+echo ""
+echo "🎉 Next steps:"
+echo "1. Deploy to Vercel (frontend)"
+echo "2. Deploy to Railway (backend)"
+echo "3. Connect them together"
+echo "4. Share your REVI.AI chatbot with the world!" 

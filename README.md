@@ -12,7 +12,7 @@ A modern ChatGPT-style chatbot that analyzes product reviews using RAG (Retrieva
 - 🔍 **RAG-powered responses** using ChromaDB and OpenAI
 - 📄 **File upload support** for review data
 - 💬 **Real-time conversation** with source citations
-- 🚀 **Production-ready** with comprehensive deployment options
+- 🚀 **Production-ready** with Vercel + Railway deployment
 
 ## 🚀 Quick Start
 
@@ -56,12 +56,13 @@ A modern ChatGPT-style chatbot that analyzes product reviews using RAG (Retrieva
 
 5. **Access the app:** Open http://localhost:3000
 
-## 🌐 Deployment to Internet
-
-### 🥇 **Option 1: Vercel + Railway (Recommended)**
+## 🌐 Deployment to Internet - Vercel + Railway
 
 **Cost:** Free tier available  
-**Difficulty:** Beginner-friendly
+**Difficulty:** ⭐⭐⭐ (Beginner-friendly)  
+**Time:** ~15-30 minutes
+
+### 🚀 **Quick Deployment Steps:**
 
 1. **Push code to GitHub**
 2. **Deploy frontend to [Vercel](https://vercel.com):**
@@ -74,28 +75,25 @@ A modern ChatGPT-style chatbot that analyzes product reviews using RAG (Retrieva
    - Set root directory to `backend`
    - Add environment variables (OpenAI API key, CORS origins)
 
-### 🥈 **Option 2: Single Server**
+4. **Connect them together and test!**
 
-**Cost:** $5-20/month  
-**Difficulty:** Intermediate
-
-Deploy both frontend and backend on DigitalOcean, AWS, or Linode. Full server setup instructions in `DEPLOYMENT_GUIDE.md`.
-
-### 🥉 **Option 3: Docker**
-
-**Cost:** Varies  
-**Difficulty:** Advanced
+### 🎯 **Use the Deployment Helper:**
 
 ```bash
-# Local testing
-docker-compose up --build
-
-# Deploy to any cloud platform supporting Docker
+chmod +x deploy.sh
+./deploy.sh
 ```
+
+This interactive script will:
+- ✅ Check all prerequisites
+- 🏗️ Build your frontend for production
+- 🐍 Setup your backend environment
+- 📋 Guide you through the deployment process
+- 🌐 Open deployment platforms in your browser
 
 ## 📚 Documentation
 
-- **[📖 Deployment Guide](DEPLOYMENT_GUIDE.md)** - Comprehensive deployment instructions
+- **[📖 Deployment Guide](DEPLOYMENT_GUIDE.md)** - Step-by-step deployment instructions
 - **[🎨 ChatGPT Interface](frontend/README_CHATGPT_STYLE.md)** - Frontend architecture details
 - **[🌙 Dark Mode Implementation](frontend/README_DARK_LIGHT_MODE.md)** - Theme system documentation
 
@@ -145,7 +143,8 @@ review-summarizer-chatbot-RAG/
 │   │   ├── routers/         # API routes
 │   │   └── ...
 │   └── requirements.txt
-├── docker-compose.yml        # Docker configuration
+├── vercel.json              # Vercel deployment config
+├── railway.json             # Railway deployment config
 ├── deploy.sh                # Deployment helper script
 └── DEPLOYMENT_GUIDE.md      # Detailed deployment guide
 ```
@@ -164,7 +163,7 @@ This script will:
 - 🏗️ Build the frontend for production
 - 🐍 Setup the backend environment
 - 📋 Guide you through deployment options
-- 🔧 Test your setup with Docker
+- 🌐 Open deployment platforms in browser
 
 ## 🔒 Security
 
