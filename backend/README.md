@@ -62,7 +62,7 @@ A FastAPI-based backend service that uses Retrieval-Augmented Generation (RAG) t
    pip install -r requirements.txt
    ```
 
-4. **Set up environment variables:**
+4. **Set up environment variables**
 
 ## ⚙️ Configuration
 
