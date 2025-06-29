@@ -1,4 +1,5 @@
 import React from 'react';
+import FileUpload from './FileUpload';
 import './WelcomeScreen.css';
 
 const WelcomeScreen = ({ onSampleQuestion }) => {
@@ -9,6 +10,11 @@ const WelcomeScreen = ({ onSampleQuestion }) => {
     "¿Cuáles son las quejas más comunes?"
   ];
 
+  const handleUploadSuccess = (response) => {
+    console.log('Upload successful:', response);
+    // You could add a notification here if needed
+  };
+
   return (
     <div className="welcome-screen">
       <div className="welcome-content">
@@ -18,6 +24,9 @@ const WelcomeScreen = ({ onSampleQuestion }) => {
           Puedo ayudarte a encontrar información específica, resumir opiniones 
           y responder preguntas sobre la experiencia de los usuarios.
         </p>
+        
+        {/* File Upload Component */}
+        <FileUpload onUploadSuccess={handleUploadSuccess} />
         
         <div className="sample-questions">
           <h3>Preguntas de ejemplo:</h3>
